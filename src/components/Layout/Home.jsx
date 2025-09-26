@@ -1,15 +1,19 @@
-import React, { useState } from "react";
+import React, { use, useState } from "react";
 import { motion } from "framer-motion";
 import { FaPlay, FaGamepad } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
+import { AuthContext } from "../AuthProvider/AuthProvider";
 
 const Home = () => {
   const navigate = useNavigate();
   const [showRules, setShowRules] = useState(false);
-  const [gameStarted, setGameStarted] = useState(false); // ✅ new state
+  const [gameStarted, setGameStarted] = useState(false); //  new state
+
+  const {user} = use(AuthContext); // user info 
+  console.log(user)
 
   const handlePlay = () => {
-    setGameStarted(true); // ✅ mark game started
+    setGameStarted(true); // mark game started
     navigate("/login");   // go to login before game
   };
 
@@ -23,7 +27,7 @@ const Home = () => {
 
   return (
     <div className="relative min-h-screen bg-gradient-to-br from-gray-900 via-black to-gray-800 text-white flex flex-col items-center justify-center overflow-hidden">
-      
+        {user ? user.email : "user not logged in"}
       {/* Background animated circles */}
       <div className="absolute w-[800px] h-[800px] bg-purple-600 rounded-full blur-3xl opacity-20 animate-pulse"></div>
       <div className="absolute w-[600px] h-[600px] bg-blue-600 rounded-full blur-3xl opacity-20 animate-ping"></div>

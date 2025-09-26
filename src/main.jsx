@@ -11,6 +11,7 @@ import MainContainer from './components/RingAndCross/MainContainer.jsx';
 import Home from './components/Layout/Home.jsx';
 import Login from './components/AuthLayout/Login.jsx';
 import Register from './components/AuthLayout/Register.jsx';
+import AuthProvider from './components/AuthProvider/AuthProvider.jsx';
 
 const router = createBrowserRouter([
   {
@@ -31,6 +32,8 @@ const router = createBrowserRouter([
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <RouterProvider router={router}></RouterProvider>
+    <AuthProvider>
+      <RouterProvider router={router}></RouterProvider>
+    </AuthProvider>
   </StrictMode>,
 )

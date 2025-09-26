@@ -1,9 +1,14 @@
-import React, { useState } from "react";
+import React, { use, useState } from "react";
 import { motion } from "framer-motion";
 import { FaUser, FaLock, FaEnvelope, FaUserPlus, FaImage } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { AuthContext } from "../AuthProvider/AuthProvider";
+
 
 const Register = () => {
+const {createUser, setUser,} = use(AuthContext); //user come from authProvider bia authContext
+const navigate = useNavigate();
+
 const handleRegister = (e) => {
   e.preventDefault();
 
@@ -13,13 +18,21 @@ const handleRegister = (e) => {
   const email = form.email.value;
   const photo = form.photo.value;
   const password = form.password.value;
+  //   console.log({ name, email, photo, password });
 
-  console.log({ name, email, photo, password });
+    createUser(email, password)
+    .then(result =>{
+      setUser(result.user);
+        // console.log(result)
+        navigate('/')
+    })
+    .catch(error =>{
+        console.log(error)
+    })
 };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-black via-gray-900 to-purple-900 relative overflow-hidden">
-      
       {/* Background glowing circles */}
       <div className="absolute w-[700px] h-[700px] bg-pink-600 rounded-full blur-3xl opacity-20 animate-pulse"></div>
       <div className="absolute w-[500px] h-[500px] bg-purple-700 rounded-full blur-3xl opacity-20 animate-ping"></div>
