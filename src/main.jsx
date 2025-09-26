@@ -5,8 +5,7 @@ import App from './App.jsx'
 
 
 
-import { createBrowserRouter } from "react-router";
-import { RouterProvider } from "react-router/dom";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import MainContainer from './components/RingAndCross/MainContainer.jsx';
 import Home from './components/Layout/Home.jsx';
 import Login from './components/AuthLayout/Login.jsx';

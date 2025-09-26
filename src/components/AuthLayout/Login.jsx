@@ -1,16 +1,29 @@
-import React, { useState } from "react";
+import React, { use, useState } from "react";
 import { motion } from "framer-motion";
 import { FaUser, FaLock, FaSignInAlt } from "react-icons/fa";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
+import { AuthContext } from "../AuthProvider/AuthProvider";
 
 const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
+  const {login} = use(AuthContext);
 
   const handleLogin = (e) => {
     e.preventDefault();
-    console.log("Login attempt:", { username, password });
-    // TODO: Add authentication logic
+    const form = e.target;
+    const email = form.email.value;
+    const password = form.password.value;
+    // console.log( { email, password });
+    login(email, password)
+    .then(result =>{
+        // console.log(result);
+        navigate('/')
+    })
+    .catch(error =>{
+        console.log(error)
+    })
   };
 
   return (
@@ -38,10 +51,9 @@ const Login = () => {
           <div className="relative">
             <FaUser className="absolute top-3 left-3 text-gray-400" />
             <input
-              type="text"
-              placeholder="Username"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
+              type="email"
+              placeholder="Email"
+              name="email"
               required
               className="w-full pl-10 pr-4 py-3 rounded-lg bg-gray-800 text-white focus:outline-none focus:ring-2 focus:ring-purple-500 transition"
             />
@@ -53,8 +65,7 @@ const Login = () => {
             <input
               type="password"
               placeholder="Password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              name="password"
               required
               className="w-full pl-10 pr-4 py-3 rounded-lg bg-gray-800 text-white focus:outline-none focus:ring-2 focus:ring-pink-500 transition"
             />
